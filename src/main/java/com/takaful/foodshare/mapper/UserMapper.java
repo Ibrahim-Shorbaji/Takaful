@@ -2,7 +2,9 @@ package com.takaful.foodshare.mapper;
 
 import com.takaful.foodshare.DTO.UserResponse;
 import com.takaful.foodshare.entity.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserMapper {
     // Entity to Response
     public UserResponse toResponse(User user) {

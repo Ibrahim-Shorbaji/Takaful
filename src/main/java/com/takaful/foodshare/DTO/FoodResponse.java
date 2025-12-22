@@ -15,15 +15,18 @@ public class FoodResponse {
 
     private Long id;
     private Long hotelId;
-    private String hotelName;
-    private String hotelAddress;
-    private String hotelPhone;
+    private String hotelName;       // For display
+    private String hotelAddress;    // For display
+    private String hotelPhone;      // For display
     private String title;
     private String description;
+    private Long quantity;
     private LocalDateTime availableUntil;
-    private LocalDateTime pickUpTime;
+    private LocalDateTime pickupTime;
     private FoodStatus status;
     private LocalDateTime postedAt;
-    private boolean isReserved;
+    private LocalDateTime updatedAt;
+
+    private Boolean isReserved;
 
 }

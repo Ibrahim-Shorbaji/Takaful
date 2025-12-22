@@ -15,4 +15,7 @@ public class ReserveFoodRequest {
 
     @NotNull(message = "charity id cannot be null")
     private Long charityId;
+
+    private String notes;  // Optional notes from charity
+
 }

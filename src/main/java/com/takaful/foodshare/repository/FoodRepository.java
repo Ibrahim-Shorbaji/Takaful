@@ -16,8 +16,6 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
     // Find all available food (for charity to browse)
     List<Food> findByStatusOrderByPostedAtDesc(FoodStatus status);
 
-    // Find available food by category
-    List<Food> findByStatusAndCategoryOrderByPostedAtDesc(FoodStatus status, FoodCategory category);
 
     // Find all food posted by a specific hotel
     List<Food> findByHotelOrderByPostedAtDesc(Hotel hotel);

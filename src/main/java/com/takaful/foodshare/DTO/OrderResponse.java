@@ -17,7 +17,7 @@ public class OrderResponse {
     private Long charityId;
 
     private String foodTitle;
-    private String foodQuantity;
+    private Long foodQuantity;
     private LocalDateTime pickupTime;
 
     private String hotelName;
@@ -31,4 +31,6 @@ public class OrderResponse {
     private String notes;
     private LocalDateTime requestedAt;
     private LocalDateTime pickedUpAt;
+private LocalDateTime updatedAt;
+
 }
