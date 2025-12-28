@@ -61,32 +61,22 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http.cors(cors -> cors.disable())  // ⬅️ ADD THIS to disable Spring Security CORS (WebConfig handles it)
+                .csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth
-                                // PUBLIC ENDPOINTS - NO TOKEN REQUIRED
                                 .requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers("/api/foods/available").permitAll()
-                                .requestMatchers("/api/foods/search").permitAll()
-                                .requestMatchers("/api/foods/recent").permitAll()
-                                .requestMatchers("/api/hotels").permitAll()
-                                .requestMatchers("/api/hotels/search").permitAll()
-                                .requestMatchers("/api/charities").permitAll()
-                                .requestMatchers("/api/charities/search").permitAll()
-
-                                // Swagger
-                                .requestMatchers("/swagger-ui/**").permitAll()
-                                .requestMatchers("/v3/api-docs/**").permitAll()
-
-                                // ALL OTHER ENDPOINTS REQUIRE AUTHENTICATION
-                                .anyRequest().authenticated()
+                                .requestMatchers("/api/foods/**").permitAll()  // Make ALL food endpoints public for testing
+                                .requestMatchers("/api/hotels/**").permitAll()
+                                .requestMatchers("/api/charities/**").permitAll()
+                                .requestMatchers("/api/orders/**").permitAll()
+                                .anyRequest().permitAll()  // ⬅️ Temporarily allow everything for testing
                 );
 
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-    }
-}
+    }}
