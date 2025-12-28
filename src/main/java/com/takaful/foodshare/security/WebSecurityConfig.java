@@ -19,12 +19,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 
 
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
+
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
@@ -60,13 +65,22 @@ public class WebSecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/auth/**").permitAll()
+                        auth
+                                // PUBLIC ENDPOINTS - NO TOKEN REQUIRED
+                                .requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers("/api/foods/available").permitAll()
                                 .requestMatchers("/api/foods/search").permitAll()
+                                .requestMatchers("/api/foods/recent").permitAll()
                                 .requestMatchers("/api/hotels").permitAll()
+                                .requestMatchers("/api/hotels/search").permitAll()
                                 .requestMatchers("/api/charities").permitAll()
+                                .requestMatchers("/api/charities/search").permitAll()
+
+                                // Swagger
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
+
+                                // ALL OTHER ENDPOINTS REQUIRE AUTHENTICATION
                                 .anyRequest().authenticated()
                 );
 
